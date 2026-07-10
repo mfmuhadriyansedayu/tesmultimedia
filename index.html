@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Pemetaan Jurnalistik & Multimedia</title>
+<style>
+:root {
+  --bg:#07111f; --panel:#0f1d2e; --panel2:#13263b; --line:#25415e;
+  --text:#f8fafc; --muted:#a7b4c4; --accent:#39d0c3; --accent2:#7dd3fc;
+  --success:#34d399; --warn:#fbbf24; --danger:#fb7185;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:
+radial-gradient(circle at top right,rgba(57,208,195,.15),transparent 25%),
+linear-gradient(180deg,#06101d,#091827 45%,#06101d);color:var(--text);min-height:100vh}
+button,input{font:inherit}
+.container{width:min(1120px,calc(100% - 28px));margin:auto;padding:28px 0 56px}
+.card{background:rgba(15,29,46,.92);border:1px solid rgba(125,211,252,.15);border-radius:28px;box-shadow:0 24px 70px rgba(0,0,0,.32)}
+.hero{padding:34px;display:grid;grid-template-columns:1.35fr .65fr;gap:24px;align-items:end}
+.eyebrow{color:var(--accent);font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+h1{font-size:clamp(32px,5vw,58px);line-height:1.02;margin:10px 0 14px}
+.hero p{color:var(--muted);line-height:1.7;margin:0;max-width:720px}
+.student-box{background:#091523;border:1px solid var(--line);padding:18px;border-radius:20px}
+label{display:block;font-weight:700;margin-bottom:8px}
+input[type=text]{width:100%;padding:13px 14px;border-radius:13px;border:1px solid var(--line);background:#06101d;color:white;outline:none}
+input[type=text]:focus{border-color:var(--accent)}
+.progress-wrap{margin-top:16px}
+.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:7px}
+.progress{height:10px;border-radius:999px;background:#1b2b3f;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.25s}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;padding:18px 0}
+.tab{border:1px solid var(--line);background:#0d1a2a;color:#cbd5e1;padding:10px 15px;border-radius:999px;cursor:pointer;font-weight:750}
+.tab.active{background:var(--accent);color:#05201d;border-color:var(--accent)}
+.tab.done:not(.active){border-color:rgba(52,211,153,.55);color:#9ff4d0}
+.section{padding:28px}
+.section-head{margin-bottom:22px}
+.section-head h2{margin:7px 0 5px;font-size:30px}
+.section-head p{margin:0;color:var(--muted)}
+.question{background:#091523;border:1px solid rgba(125,211,252,.12);border-radius:20px;padding:20px;margin:14px 0}
+.qhead{display:flex;gap:12px;align-items:flex-start}
+.num{width:32px;height:32px;flex:0 0 32px;border-radius:50%;display:grid;place-items:center;background:#17304a;font-weight:900;color:#dff9ff}
+.qtext{font-weight:800;line-height:1.55}
+.options{display:grid;gap:9px;margin-top:15px}
+.option{width:100%;text-align:left;padding:12px 14px;border-radius:14px;border:1px solid #263f59;background:#0d1d2e;color:#dbe7f3;cursor:pointer;transition:.18s;line-height:1.45}
+.option:hover{border-color:#4d789e;background:#11263b}
+.option.selected{background:var(--accent);border-color:var(--accent);color:#04211d;font-weight:800}
+.letter{font-weight:900;margin-right:7px}
+.actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.btn{border:none;border-radius:14px;padding:13px 19px;font-weight:850;cursor:pointer}
+.btn-secondary{background:#1a2b3f;color:white}
+.btn-primary{background:white;color:#07111f}
+.btn-result{background:var(--accent);color:#04211d}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.notice{color:#ffd783;font-size:14px;margin-top:13px}
+.hidden{display:none!important}
+.result-wrap{padding:30px}
+.result-top{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:22px}
+.result-top h2{font-size:42px;margin:7px 0 5px}
+.result-top p{color:var(--muted);margin:0}
+.reco-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.reco{border-radius:22px;padding:23px}
+.reco.primary{background:linear-gradient(135deg,var(--accent),#8beee4);color:#05201d}
+.reco.secondary{background:#0a1726;border:1px solid var(--line)}
+.reco small{font-weight:900;text-transform:uppercase;letter-spacing:.13em;opacity:.75}
+.reco h3{font-size:30px;margin:8px 0}
+.result-card{background:#091523;border:1px solid rgba(125,211,252,.14);border-radius:20px;padding:20px;margin-top:13px}
+.result-row{display:flex;justify-content:space-between;gap:16px;align-items:center}
+.rank{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#17304a;font-weight:900}
+.result-title{display:flex;gap:12px;align-items:center}
+.score{font-size:27px;font-weight:950;color:var(--accent2)}
+.subscores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.sub{background:#06101d;border-radius:14px;padding:13px;color:#d7e3ef}
+.sub small{display:block;color:var(--muted);margin-top:4px}
+.footer-note{margin-top:20px;color:var(--muted);font-size:13px;line-height:1.6}
+@media(max-width:760px){
+  .hero{grid-template-columns:1fr;padding:24px}
+  .section,.result-wrap{padding:20px}
+  .reco-grid,.subscores{grid-template-columns:1fr}
+  .result-top{display:block}
+  .result-top .btn{margin-top:15px}
+  .actions{flex-direction:column}
+  .btn{width:100%}
+}
+@media print{
+  body{background:white;color:black}
+  .container{width:100%;padding:0}
+  .card{box-shadow:none;border:none;background:white}
+  #quizView,.tabs,.btn{display:none!important}
+  #resultView{display:block!important}
+  .result-card,.reco.secondary,.sub{background:white;color:black;border:1px solid #bbb}
+  .reco.primary{background:#eee;color:black}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="quizView">
+    <section class="card hero">
+      <div>
+        <div class="eyebrow">Ekstrakurikuler Jurnalistik & Multimedia</div>
+        <h1>Tes Pemetaan Minat dan Kemampuan Awal</h1>
+        <p>Jawab seluruh 50 soal. Setelah selesai, hasil kemampuan dasar, tingkat minat, serta rekomendasi divisi akan langsung tampil di layar.</p>
+      </div>
+      <div class="student-box">
+        <label for="studentName">Nama siswa</label>
+        <input id="studentName" type="text" placeholder="Contoh: Nabila Putri">
+        <div class="progress-wrap">
+          <div class="progress-meta"><span>Progress jawaban</span><span id="progressText">0/50 soal</span></div>
+          <div class="progress"><span id="progressBar"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <section class="card section">
+      <div class="section-head">
+        <div class="eyebrow" id="sectionIndex"></div>
+        <h2 id="sectionTitle"></h2>
+        <p id="sectionDesc"></p>
+      </div>
+      <div id="questions"></div>
+      <div class="actions">
+        <button class="btn btn-secondary" id="prevBtn">Sebelumnya</button>
+        <button class="btn btn-primary" id="nextBtn">Lanjut</button>
+        <button class="btn btn-result hidden" id="resultBtn">Lihat Hasil</button>
+      </div>
+      <div class="notice hidden" id="notice">Lengkapi semua jawaban terlebih dahulu agar hasil dapat ditampilkan.</div>
+    </section>
+  </div>
+
+  <section class="card result-wrap hidden" id="resultView">
+    <div class="result-top">
+      <div>
+        <div class="eyebrow">Tes selesai</div>
+        <h2>Hasil Pemetaan</h2>
+        <p id="resultIntro"></p>
+      </div>
+      <div>
+        <button class="btn btn-secondary" onclick="window.print()">Cetak Hasil</button>
+        <button class="btn btn-primary" id="resetBtn">Ulangi Tes</button>
+      </div>
+    </div>
+    <div class="reco-grid">
+      <div class="reco primary">
+        <small>Rekomendasi utama</small>
+        <h3 id="topDivision"></h3>
+        <div id="topScore"></div>
+        <p>Bidang ini paling menonjol berdasarkan gabungan kemampuan dasar dan minat belajar.</p>
+      </div>
+      <div class="reco secondary">
+        <small>Alternatif kuat</small>
+        <h3 id="secondDivision"></h3>
+        <div id="secondScore"></div>
+        <p>Bidang ini dapat menjadi pilihan kedua atau bidang pendukung dalam produksi konten sekolah.</p>
+      </div>
+    </div>
+    <div id="resultList"></div>
+    <div class="footer-note">
+      Hasil ini merupakan pemetaan awal, bukan penentu kelulusan. Siswa dengan kemampuan dasar yang masih rendah tetapi memiliki minat tinggi tetap berpotensi berkembang melalui latihan dan pendampingan.
+    </div>
+  </section>
+</div>
+
+<script>
+const categories = [{"id": "fotografi", "title": "Fotografi", "description": "Mengukur kebiasaan melihat momen, memilih sudut, menjaga kestabilan, dan etika dokumentasi.", "questions": [{"q": "Kamu diminta memotret teman yang sedang menerima penghargaan. Agar momennya tidak terlewat, sebaiknya kamu ....", "options": ["Menunggu sampai acara selesai", "Menyiapkan kamera sebelum nama teman dipanggil", "Memotret setelah teman kembali ke tempat duduk", "Meminta teman mengulang penerimaan penghargaan", "Memotret penonton saja"], "answer": 1, "type": "skill"}, {"q": "Saat mengambil foto, hasilnya terlihat miring. Hal yang sebaiknya dilakukan adalah ....", "options": ["Membiarkannya karena tidak berpengaruh", "Menghapus semua foto", "Memegang kamera lebih lurus atau memperbaikinya saat penyuntingan", "Menutup sebagian kamera", "Mengubah foto menjadi hitam putih"], "answer": 2, "type": "skill"}, {"q": "Kamu ingin memotret teman, tetapi bagian belakangnya terlihat sangat ramai. Sebaiknya kamu ....", "options": ["Mencari sudut dengan latar yang lebih sederhana", "Meminta semua orang meninggalkan tempat", "Memotret dari jarak sangat jauh", "Menambahkan lebih banyak benda di belakangnya", "Memotret tanpa melihat layar"], "answer": 0, "type": "skill"}, {"q": "Foto yang kamu ambil terlihat kabur karena tangan bergerak. Cara sederhana untuk menguranginya adalah ....", "options": ["Menggerakkan kamera lebih cepat", "Memegang kamera dengan lebih stabil", "Menutup layar kamera", "Mengambil foto sambil berjalan", "Mengarahkan kamera ke tempat lain"], "answer": 1, "type": "skill"}, {"q": "Saat memotret seseorang, bagian wajah yang biasanya perlu terlihat jelas adalah ....", "options": ["Mata dan ekspresi wajah", "Bagian belakang kepala", "Sepatu orang lain", "Dinding di belakangnya", "Benda yang tidak berkaitan"], "answer": 0, "type": "skill"}, {"q": "Kamu akan mengambil foto kegiatan sekolah di dalam ruangan yang agak gelap. Tindakan yang paling tepat adalah ....", "options": ["Memotret tanpa memperhatikan hasilnya", "Mencari tempat dengan cahaya yang lebih baik", "Menutup sumber cahaya", "Meminta semua orang diam sepanjang acara", "Memotret lantai ruangan"], "answer": 1, "type": "skill"}, {"q": "Kamu ingin mengunggah foto teman ke media sosial sekolah. Sebelum mengunggahnya, sebaiknya kamu ....", "options": ["Langsung mengunggah tanpa memberitahu", "Mengubah wajahnya agar lucu", "Memastikan fotonya pantas dan mendapat izin jika diperlukan", "Menambahkan keterangan yang mempermalukan", "Mengirimkannya ke semua grup"], "answer": 2, "type": "skill"}, {"q": "Dalam sebuah acara sekolah, foto yang paling penting untuk diambil adalah ....", "options": ["Foto yang hanya berisi benda kosong", "Foto momen utama dan kegiatan peserta", "Foto kaki fotografer", "Foto yang sama berulang kali", "Foto setelah semua peserta pulang"], "answer": 1, "type": "skill"}, {"q": "Jika sekolah mengadakan acara besar, saya ....", "options": ["Tidak tertarik mengambil foto", "Lebih memilih tidak ikut", "Mau membantu jika ditemani", "Tertarik menjadi bagian dokumentasi", "Sangat ingin menjadi fotografer kegiatan"], "type": "interest"}, {"q": "Untuk belajar fotografi, saya bersedia ....", "options": ["Tidak mencoba sama sekali", "Mencoba hanya ketika diwajibkan", "Sesekali mengambil foto", "Sering berlatih dan melihat contoh foto yang bagus", "Rutin berlatih dan menerima saran untuk memperbaiki hasil foto"], "type": "interest"}]}, {"id": "videografi", "title": "Videografi", "description": "Mengukur kemampuan dasar merekam kegiatan, menyusun urutan cerita, dan menjaga gambar serta suara.", "questions": [{"q": "Kamu diminta membuat video singkat tentang kegiatan sekolah. Sebelum merekam, sebaiknya kamu ....", "options": ["Langsung merekam apa saja", "Menentukan isi dan urutan video terlebih dahulu", "Menunggu orang lain mengerjakan", "Hanya memilih musik", "Mengambil video setelah acara selesai"], "answer": 1, "type": "skill"}, {"q": "Saat merekam teman berbicara, gambar terlihat sering bergoyang. Cara mengatasinya adalah ....", "options": ["Menggerakkan ponsel lebih cepat", "Memegang ponsel dengan lebih stabil", "Merekam sambil berlari", "Menutup sebagian kamera", "Mengubah suara teman"], "answer": 1, "type": "skill"}, {"q": "Dalam video wawancara, suara narasumber tidak terdengar jelas. Hal yang sebaiknya dilakukan adalah ....", "options": ["Membiarkannya karena gambar sudah bagus", "Mendekatkan alat perekam atau mencari tempat yang lebih tenang", "Menambahkan musik lebih keras", "Memotong seluruh bagian wawancara", "Mengganti narasumber tanpa alasan"], "answer": 1, "type": "skill"}, {"q": "Agar penonton memahami kegiatan yang direkam, video sebaiknya ....", "options": ["Berisi gambar yang acak", "Memiliki urutan awal, kegiatan utama, dan penutup", "Hanya menampilkan satu benda", "Berisi bagian penutup saja", "Tidak memiliki hubungan antarbagian"], "answer": 1, "type": "skill"}, {"q": "Kamu merekam video untuk ditampilkan di layar lebar sekolah. Posisi ponsel yang paling sesuai adalah ....", "options": ["Mendatar", "Terbalik", "Miring", "Menghadap ke bawah", "Bebas tanpa memperhatikan hasil"], "answer": 0, "type": "skill"}, {"q": "Saat merekam kegiatan, ada orang berjalan menutupi kamera. Sebaiknya kamu ....", "options": ["Tetap menggunakan hasil tersebut tanpa diperiksa", "Mengambil ulang dari posisi yang lebih baik", "Berhenti membuat video", "Memarahi semua orang", "Menghapus seluruh rekaman"], "answer": 1, "type": "skill"}, {"q": "Agar video tidak membosankan, kamu dapat ....", "options": ["Menampilkan satu gambar yang sama terus-menerus", "Mengambil beberapa bagian kegiatan dari sudut yang berbeda", "Menggoyangkan kamera sepanjang rekaman", "Menambahkan suara yang sangat keras", "Menghapus semua bagian penting"], "answer": 1, "type": "skill"}, {"q": "Saat merekam teman, hal yang sebaiknya dihindari adalah ....", "options": ["Memastikan wajahnya terlihat jelas", "Memeriksa suara sebelum merekam", "Merekam tanpa izin dalam keadaan yang dapat mempermalukan", "Memilih tempat yang cukup terang", "Menjaga kamera tetap stabil"], "answer": 2, "type": "skill"}, {"q": "Jika mendapat tugas membuat video profil sekolah, saya ....", "options": ["Tidak ingin terlibat", "Hanya ingin melihat orang lain bekerja", "Bersedia membantu bagian sederhana", "Tertarik ikut membuat konsep atau merekam", "Sangat ingin terlibat dari awal sampai selesai"], "type": "interest"}, {"q": "Jika hasil video pertama belum bagus, saya ....", "options": ["Langsung berhenti", "Menyalahkan alat yang digunakan", "Mencoba kembali jika diminta", "Melihat kekurangannya dan merekam ulang", "Merekam ulang, mencari contoh, dan terus memperbaiki hasilnya"], "type": "interest"}]}, {"id": "reporter", "title": "Reporter", "description": "Mengukur keberanian bertanya, mendengarkan, memeriksa informasi, dan menyampaikan cerita.", "questions": [{"q": "Kamu diminta mewawancarai ketua panitia suatu kegiatan. Pertanyaan yang paling baik adalah ....", "options": ["Acaranya bagus, kan?", "Apakah Anda senang?", "Bagaimana persiapan kegiatan ini dilakukan?", "Acaranya tidak sulit, ya?", "Anda setuju dengan saya, bukan?"], "answer": 2, "type": "skill"}, {"q": "Saat narasumber sedang menjawab pertanyaan, reporter sebaiknya ....", "options": ["Memotong pembicaraan terus-menerus", "Mendengarkan dengan baik", "Bermain ponsel", "Berbicara dengan teman", "Meninggalkan narasumber"], "answer": 1, "type": "skill"}, {"q": "Kamu mendapat informasi dari seorang teman, tetapi belum yakin kebenarannya. Sebaiknya kamu ....", "options": ["Langsung menyebarkannya", "Menambahkan cerita agar lebih menarik", "Memeriksa informasi kepada pihak yang mengetahui kejadian", "Mengunggahnya dengan nama samaran", "Menganggap informasi tersebut pasti benar"], "answer": 2, "type": "skill"}, {"q": "Sebelum melakukan wawancara, hal yang sebaiknya disiapkan adalah ....", "options": ["Daftar pertanyaan", "Daftar lagu", "Permainan untuk narasumber", "Efek suara", "Hiasan untuk ruangan"], "answer": 0, "type": "skill"}, {"q": "Jika narasumber memberikan jawaban yang belum jelas, reporter sebaiknya ....", "options": ["Membuat jawaban sendiri", "Mengakhiri wawancara", "Meminta narasumber menjelaskan lebih lanjut", "Mengubah isi jawabannya", "Menertawakan jawaban tersebut"], "answer": 2, "type": "skill"}, {"q": "Saat menyampaikan berita di depan kamera, reporter sebaiknya berbicara ....", "options": ["Sangat cepat agar segera selesai", "Pelan dan tidak terdengar", "Jelas, teratur, dan mudah dipahami", "Sambil membelakangi kamera", "Tanpa memahami isi berita"], "answer": 2, "type": "skill"}, {"q": "Reporter sekolah mendapatkan informasi pribadi dari seorang siswa. Reporter sebaiknya ....", "options": ["Langsung menyebarkannya", "Menjaga privasi dan mempertimbangkan izin", "Mengunggahnya agar menjadi ramai", "Menambahkan informasi yang tidak ada", "Mengirimkannya kepada semua teman"], "answer": 1, "type": "skill"}, {"q": "Setelah selesai melakukan wawancara, reporter perlu ....", "options": ["Memeriksa kembali catatan atau rekamannya", "Menghapus semua jawaban", "Mengubah jawaban narasumber", "Menambahkan pendapat pribadi sebagai fakta", "Menyimpan informasi tanpa digunakan"], "answer": 0, "type": "skill"}, {"q": "Jika diberi kesempatan mewawancarai guru atau tamu sekolah, saya ....", "options": ["Tidak mau mencobanya", "Mau jika semua pertanyaan dibacakan orang lain", "Mau mencoba dengan bantuan teman", "Tertarik menyiapkan dan melakukan wawancara", "Sangat tertarik melakukan wawancara dan menyampaikan hasilnya"], "type": "interest"}, {"q": "Untuk menjadi reporter sekolah, saya bersedia ....", "options": ["Tidak mengikuti latihan", "Berlatih hanya saat ada nilai", "Sesekali mencoba berbicara di depan orang lain", "Berlatih bertanya dan berbicara dengan jelas", "Aktif mencari informasi, berlatih, dan menerima evaluasi"], "type": "interest"}]}, {"id": "editing", "title": "Editing Video / Grafis", "description": "Mengukur ketelitian merapikan video, suara, poster, tulisan, warna, dan susunan informasi.", "questions": [{"q": "Kamu memiliki rekaman berdurasi lima menit, tetapi ada bagian kosong yang cukup panjang. Sebaiknya kamu ....", "options": ["Membiarkan bagian kosong tersebut", "Memotong bagian yang tidak diperlukan", "Mengulang bagian kosong berkali-kali", "Menambahkan suara yang sangat keras", "Menghapus seluruh video"], "answer": 1, "type": "skill"}, {"q": "Saat membuat poster, tulisan terlihat sulit dibaca karena warnanya hampir sama dengan latar belakang. Sebaiknya kamu ....", "options": ["Membuat warna tulisan lebih berbeda dari latarnya", "Mengecilkan tulisan", "Menambahkan lebih banyak gambar", "Menghapus judul", "Menggunakan semua warna sekaligus"], "answer": 0, "type": "skill"}, {"q": "Dalam sebuah video, suara musik lebih keras daripada suara orang yang berbicara. Sebaiknya kamu ....", "options": ["Menaikkan suara musik lagi", "Mengecilkan suara musik", "Menghapus suara orang", "Menambah lebih banyak lagu", "Membiarkannya tanpa diperiksa"], "answer": 1, "type": "skill"}, {"q": "Agar poster kegiatan mudah dipahami, informasi yang paling penting sebaiknya ....", "options": ["Ditulis sangat kecil", "Diletakkan pada bagian yang mudah terlihat", "Disembunyikan di belakang gambar", "Menggunakan warna yang sama dengan latar", "Dihapus agar poster lebih kosong"], "answer": 1, "type": "skill"}, {"q": "Penggunaan terlalu banyak hiasan dan efek dalam video dapat membuat ....", "options": ["Isi video semakin mudah dipahami", "Penonton lebih fokus pada pesan utama", "Video terlihat ramai dan pesan utamanya kurang jelas", "Suara menjadi lebih jernih", "Durasi video menjadi lebih pendek"], "answer": 2, "type": "skill"}, {"q": "Sebelum menyimpan hasil akhir video atau desain, sebaiknya kamu ....", "options": ["Memeriksa kembali tulisan, gambar, dan suara", "Langsung menghapus file awal", "Mengirimkannya tanpa melihat hasil", "Mengganti semua isi", "Menutup aplikasi secara tiba-tiba"], "answer": 0, "type": "skill"}, {"q": "Kamu ingin menggunakan lagu dari internet untuk video sekolah. Tindakan yang paling tepat adalah ....", "options": ["Menggunakan lagu apa saja tanpa diperiksa", "Menggunakan lagu yang diperbolehkan atau mencantumkan sumber sesuai ketentuan", "Mengaku lagu tersebut sebagai milik sendiri", "Menghapus nama pembuat lagu", "Mengunggah ulang lagu secara penuh"], "answer": 1, "type": "skill"}, {"q": "Agar hasil editing tidak hilang, kamu sebaiknya ....", "options": ["Menyimpan pekerjaan secara berkala", "Menunggu sampai perangkat mati", "Tidak memberi nama file", "Menghapus file setelah selesai", "Menyimpan hanya di satu tempat tanpa cadangan"], "answer": 0, "type": "skill"}, {"q": "Ketika melihat video atau poster yang kurang rapi, saya ....", "options": ["Tidak tertarik memperbaikinya", "Menunggu orang lain memperbaiki", "Mau mencoba jika diberi petunjuk", "Tertarik memperbaiki susunan, tulisan, atau gambarnya", "Sangat tertarik membuat hasilnya lebih menarik dan mudah dipahami"], "type": "interest"}, {"q": "Untuk mempelajari aplikasi editing baru, saya ....", "options": ["Tidak mau mencobanya", "Langsung berhenti ketika kesulitan", "Mau mencoba jika diwajibkan", "Bersedia mengikuti panduan dan berlatih", "Senang belajar sendiri, mencoba berbagai cara, dan membuat karya"], "type": "interest"}]}, {"id": "bahasa", "title": "Editor Bahasa", "description": "Mengukur ketelitian memperbaiki kalimat, caption, judul, informasi, dan kesalahan penulisan.", "questions": [{"q": "Kalimat yang paling jelas dan mudah dipahami adalah ....", "options": ["Para siswa-siswa mengikuti kegiatan bersama-sama.", "Siswa mengikuti kegiatan jurnalistik di aula sekolah.", "Para siswa adalah mengikuti kegiatan yang diadakan.", "Kegiatan tersebut adalah kegiatan yang diikuti siswa-siswa.", "Siswa mengikuti kegiatan yang mana kegiatan itu dilaksanakan."], "answer": 1, "type": "skill"}, {"q": "Penulisan yang benar adalah ....", "options": ["di sekolah", "disekolah", "diSekolah", "di-sekolah", "Di sekolahh"], "answer": 0, "type": "skill"}, {"q": "Kalimat yang menggunakan tanda baca dengan tepat adalah ....", "options": ["Kegiatan dimulai pukul 08.00 dan berakhir pukul 11.00.", "Kegiatan dimulai, pukul 08.00 dan berakhir pukul 11.00", "Kegiatan dimulai pukul 08.00, dan, berakhir pukul 11.00.", "Kegiatan dimulai pukul 08.00 dan berakhir pukul 11.00,", "Kegiatan, dimulai pukul 08.00 dan berakhir, pukul 11.00."], "answer": 0, "type": "skill"}, {"q": "Judul berita yang paling jelas adalah ....", "options": ["Acara Seru Banget!", "Ada Kegiatan Kemarin", "Siswa Kelas X Mengikuti Pelatihan Jurnalistik", "Wah, Sekolah Kita Keren", "Jangan Lewatkan Berita Ini"], "answer": 2, "type": "skill"}, {"q": "Kalimat “Acara itu sangat ramai sekali” dapat diperbaiki menjadi ....", "options": ["Acara itu ramai.", "Acara itu sangat ramai sekali banget.", "Acara ramai itu sekali.", "Sangat acara itu ramai.", "Acara tersebut sangat ramai sekali sekali."], "answer": 0, "type": "skill"}, {"q": "Sebelum mengunggah berita sekolah, editor bahasa sebaiknya ....", "options": ["Memeriksa isi, nama, waktu, dan penulisannya", "Langsung mengunggah tanpa membaca", "Mengganti semua fakta", "Menambahkan cerita yang tidak terjadi", "Menghapus nama kegiatan"], "answer": 0, "type": "skill"}, {"q": "Caption foto kegiatan yang baik seharusnya ....", "options": ["Menjelaskan kegiatan dalam foto secara singkat dan jelas", "Hanya berisi emoji", "Tidak berhubungan dengan foto", "Berisi informasi yang belum pasti", "Menggunakan kata-kata yang sulit dipahami"], "answer": 0, "type": "skill"}, {"q": "Kamu menemukan salah tulis nama seseorang dalam berita. Sebaiknya kamu ....", "options": ["Membiarkannya", "Memperbaikinya setelah memastikan nama yang benar", "Menghapus seluruh berita", "Mengganti dengan nama orang lain", "Menambahkan nama panggilan tanpa izin"], "answer": 1, "type": "skill"}, {"q": "Ketika membaca caption yang kurang jelas, saya ....", "options": ["Tidak memperhatikannya", "Mengetahui kesalahannya, tetapi tidak tertarik memperbaiki", "Mau memperbaiki jika diminta", "Tertarik membuatnya lebih jelas dan menarik", "Sangat tertarik memperbaiki kata, susunan kalimat, dan isi caption"], "type": "interest"}, {"q": "Untuk meningkatkan kemampuan menulis, saya ....", "options": ["Tidak tertarik membaca atau menulis", "Menulis hanya jika ada tugas", "Sesekali membaca contoh tulisan", "Bersedia berlatih menulis dan menerima koreksi", "Sering membaca, menulis, dan memperbaiki tulisan sendiri"], "type": "interest"}]}];
+const letters = ["A","B","C","D","E"];
+let answers = {};
+let activeIndex = 0;
+
+const tabsEl = document.getElementById("tabs");
+const questionsEl = document.getElementById("questions");
+const titleEl = document.getElementById("sectionTitle");
+const descEl = document.getElementById("sectionDesc");
+const indexEl = document.getElementById("sectionIndex");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const resultBtn = document.getElementById("resultBtn");
+const notice = document.getElementById("notice");
+const progressText = document.getElementById("progressText");
+const progressBar = document.getElementById("progressBar");
+
+function totalQuestions() {
+  return categories.reduce((n,c)=>n+c.questions.length,0);
+}
+
+function keyFor(catId, qIndex) {
+  return catId + "-" + qIndex;
+}
+
+function categoryDone(cat) {
+  return cat.questions.every((q,i)=>answers[keyFor(cat.id,i)] !== undefined);
+}
+
+function updateProgress() {
+  const answered = Object.keys(answers).length;
+  const total = totalQuestions();
+  progressText.textContent = answered + "/" + total + " soal";
+  progressBar.style.width = Math.round(answered/total*100) + "%";
+}
+
+function renderTabs() {
+  tabsEl.innerHTML = "";
+  categories.forEach((cat,i)=>{
+    const btn = document.createElement("button");
+    btn.className = "tab" + (i===activeIndex ? " active" : "") + (categoryDone(cat) ? " done" : "");
+    btn.textContent = cat.title;
+    btn.onclick = ()=>{ activeIndex=i; render(); window.scrollTo({top:0,behavior:"smooth"}); };
+    tabsEl.appendChild(btn);
+  });
+}
+
+function renderQuestions() {
+  const cat = categories[activeIndex];
+  indexEl.textContent = "Bagian " + (activeIndex+1) + " dari " + categories.length;
+  titleEl.textContent = cat.title;
+  descEl.textContent = cat.description;
+  questionsEl.innerHTML = "";
+
+  cat.questions.forEach((item,qi)=>{
+    const box = document.createElement("div");
+    box.className = "question";
+
+    const head = document.createElement("div");
+    head.className = "qhead";
+    head.innerHTML = '<div class="num">'+(qi+1)+'</div><div class="qtext">'+item.q+'</div>';
+    box.appendChild(head);
+
+    const opts = document.createElement("div");
+    opts.className = "options";
+    item.options.forEach((opt,oi)=>{
+      const b = document.createElement("button");
+      const selected = answers[keyFor(cat.id,qi)] === oi;
+      b.className = "option" + (selected ? " selected" : "");
+      b.innerHTML = '<span class="letter">'+letters[oi]+'.</span>'+opt;
+      b.onclick = ()=>{
+        answers[keyFor(cat.id,qi)] = oi;
+        updateProgress();
+        render();
+      };
+      opts.appendChild(b);
+    });
+    box.appendChild(opts);
+    questionsEl.appendChild(box);
+  });
+}
+
+function renderButtons() {
+  prevBtn.disabled = activeIndex===0;
+  prevBtn.onclick = ()=>{ if(activeIndex>0){activeIndex--;render();window.scrollTo({top:0,behavior:"smooth"});} };
+  nextBtn.classList.toggle("hidden", activeIndex===categories.length-1);
+  resultBtn.classList.toggle("hidden", activeIndex!==categories.length-1);
+  nextBtn.onclick = ()=>{ if(activeIndex<categories.length-1){activeIndex++;render();window.scrollTo({top:0,behavior:"smooth"});} };
+
+  const complete = Object.keys(answers).length === totalQuestions();
+  resultBtn.disabled = !complete;
+  notice.classList.toggle("hidden", complete || activeIndex!==categories.length-1);
+  resultBtn.onclick = showResults;
+}
+
+function render() {
+  renderTabs();
+  renderQuestions();
+  renderButtons();
+  updateProgress();
+}
+
+function skillLabel(score) {
+  if(score<=3) return "Perlu dibimbing dari dasar";
+  if(score<=6) return "Cukup dan dapat dikembangkan";
+  return "Kuat untuk tahap awal";
+}
+
+function interestLabel(score) {
+  if(score<=4) return "Minat masih rendah";
+  if(score<=7) return "Minat cukup";
+  return "Minat tinggi";
+}
+
+function calculateResults() {
+  return categories.map(cat=>{
+    let skill=0, interest=0;
+    cat.questions.forEach((q,i)=>{
+      const value = answers[keyFor(cat.id,i)];
+      if(q.type==="skill" && value===q.answer) skill++;
+      if(q.type==="interest" && value!==undefined) interest += value+1;
+    });
+    return {
+      id:cat.id,
+      title:cat.title,
+      description:cat.description,
+      skill,
+      interest,
+      total:skill+interest
+    };
+  }).sort((a,b)=>b.total-a.total || b.interest-a.interest || b.skill-a.skill);
+}
+
+function showResults() {
+  if(Object.keys(answers).length !== totalQuestions()) return;
+  const results = calculateResults();
+  const name = document.getElementById("studentName").value.trim();
+  document.getElementById("resultIntro").textContent =
+    (name ? name + ", " : "") + "berikut hasil kemampuan dasar dan minatmu pada setiap bidang.";
+  document.getElementById("topDivision").textContent = results[0].title;
+  document.getElementById("topScore").textContent = "Skor total: " + results[0].total + "/18";
+  document.getElementById("secondDivision").textContent = results[1].title;
+  document.getElementById("secondScore").textContent = "Skor total: " + results[1].total + "/18";
+
+  const list = document.getElementById("resultList");
+  list.innerHTML = "";
+  results.forEach((r,i)=>{
+    const card = document.createElement("div");
+    card.className = "result-card";
+    card.innerHTML = `
+      <div class="result-row">
+        <div class="result-title">
+          <div class="rank">${i+1}</div>
+          <div><strong>${r.title}</strong><div style="color:var(--muted);font-size:13px;margin-top:4px">${r.description}</div></div>
+        </div>
+        <div class="score">${r.total}/18</div>
+      </div>
+      <div class="subscores">
+        <div class="sub"><strong>Kemampuan dasar: ${r.skill}/8</strong><small>${skillLabel(r.skill)}</small></div>
+        <div class="sub"><strong>Minat belajar: ${r.interest}/10</strong><small>${interestLabel(r.interest)}</small></div>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+
+  document.getElementById("quizView").classList.add("hidden");
+  document.getElementById("resultView").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.getElementById("resetBtn").onclick = ()=>{
+  answers = {};
+  activeIndex = 0;
+  document.getElementById("studentName").value = "";
+  document.getElementById("resultView").classList.add("hidden");
+  document.getElementById("quizView").classList.remove("hidden");
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+render();
+</script>
+</body>
+</html>
