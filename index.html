@@ -137,16 +137,6 @@ input[type=text]:focus{border-color:var(--accent)}
         <div class="eyebrow">Tes selesai</div>
         <h2>Hasil Pemetaan</h2>
         <p id="resultIntro"></p>
-        <p
-  id="syncStatus"
-  style="
-    color: #34d399;
-    font-weight: 700;
-    margin-top: 8px;
-  "
->
-  Hasil telah dikirim ke Google Sheets.
-</p>
       </div>
       <div>
         <button class="btn btn-secondary" onclick="window.print()">Cetak Hasil</button>
@@ -175,8 +165,11 @@ input[type=text]:focus{border-color:var(--accent)}
 </div>
 
 <script>
-  const GOOGLE_SHEET_URL =
+  <script>
+const GOOGLE_SHEET_URL =
   "https://script.google.com/macros/s/AKfycbyBjYMAAww9mI_ZBHWXwloCP9pf7WthRMkNPNK9AYc4uzt6Zm_gk0SpiizKsSNUKXj8/exec";
+
+const categories = [
 const categories = [{"id": "fotografi", "title": "Fotografi", "description": "Mengukur kebiasaan melihat momen, memilih sudut, menjaga kestabilan, dan etika dokumentasi.", "questions": [{"q": "Kamu diminta memotret teman yang sedang menerima penghargaan. Agar momennya tidak terlewat, sebaiknya kamu ....", "options": ["Menunggu sampai acara selesai", "Menyiapkan kamera sebelum nama teman dipanggil", "Memotret setelah teman kembali ke tempat duduk", "Meminta teman mengulang penerimaan penghargaan", "Memotret penonton saja"], "answer": 1, "type": "skill"}, {"q": "Saat mengambil foto, hasilnya terlihat miring. Hal yang sebaiknya dilakukan adalah ....", "options": ["Membiarkannya karena tidak berpengaruh", "Menghapus semua foto", "Memegang kamera lebih lurus atau memperbaikinya saat penyuntingan", "Menutup sebagian kamera", "Mengubah foto menjadi hitam putih"], "answer": 2, "type": "skill"}, {"q": "Kamu ingin memotret teman, tetapi bagian belakangnya terlihat sangat ramai. Sebaiknya kamu ....", "options": ["Mencari sudut dengan latar yang lebih sederhana", "Meminta semua orang meninggalkan tempat", "Memotret dari jarak sangat jauh", "Menambahkan lebih banyak benda di belakangnya", "Memotret tanpa melihat layar"], "answer": 0, "type": "skill"}, {"q": "Foto yang kamu ambil terlihat kabur karena tangan bergerak. Cara sederhana untuk menguranginya adalah ....", "options": ["Menggerakkan kamera lebih cepat", "Memegang kamera dengan lebih stabil", "Menutup layar kamera", "Mengambil foto sambil berjalan", "Mengarahkan kamera ke tempat lain"], "answer": 1, "type": "skill"}, {"q": "Saat memotret seseorang, bagian wajah yang biasanya perlu terlihat jelas adalah ....", "options": ["Mata dan ekspresi wajah", "Bagian belakang kepala", "Sepatu orang lain", "Dinding di belakangnya", "Benda yang tidak berkaitan"], "answer": 0, "type": "skill"}, {"q": "Kamu akan mengambil foto kegiatan sekolah di dalam ruangan yang agak gelap. Tindakan yang paling tepat adalah ....", "options": ["Memotret tanpa memperhatikan hasilnya", "Mencari tempat dengan cahaya yang lebih baik", "Menutup sumber cahaya", "Meminta semua orang diam sepanjang acara", "Memotret lantai ruangan"], "answer": 1, "type": "skill"}, {"q": "Kamu ingin mengunggah foto teman ke media sosial sekolah. Sebelum mengunggahnya, sebaiknya kamu ....", "options": ["Langsung mengunggah tanpa memberitahu", "Mengubah wajahnya agar lucu", "Memastikan fotonya pantas dan mendapat izin jika diperlukan", "Menambahkan keterangan yang mempermalukan", "Mengirimkannya ke semua grup"], "answer": 2, "type": "skill"}, {"q": "Dalam sebuah acara sekolah, foto yang paling penting untuk diambil adalah ....", "options": ["Foto yang hanya berisi benda kosong", "Foto momen utama dan kegiatan peserta", "Foto kaki fotografer", "Foto yang sama berulang kali", "Foto setelah semua peserta pulang"], "answer": 1, "type": "skill"}, {"q": "Jika sekolah mengadakan acara besar, saya ....", "options": ["Tidak tertarik mengambil foto", "Lebih memilih tidak ikut", "Mau membantu jika ditemani", "Tertarik menjadi bagian dokumentasi", "Sangat ingin menjadi fotografer kegiatan"], "type": "interest"}, {"q": "Untuk belajar fotografi, saya bersedia ....", "options": ["Tidak mencoba sama sekali", "Mencoba hanya ketika diwajibkan", "Sesekali mengambil foto", "Sering berlatih dan melihat contoh foto yang bagus", "Rutin berlatih dan menerima saran untuk memperbaiki hasil foto"], "type": "interest"}]}, {"id": "videografi", "title": "Videografi", "description": "Mengukur kemampuan dasar merekam kegiatan, menyusun urutan cerita, dan menjaga gambar serta suara.", "questions": [{"q": "Kamu diminta membuat video singkat tentang kegiatan sekolah. Sebelum merekam, sebaiknya kamu ....", "options": ["Langsung merekam apa saja", "Menentukan isi dan urutan video terlebih dahulu", "Menunggu orang lain mengerjakan", "Hanya memilih musik", "Mengambil video setelah acara selesai"], "answer": 1, "type": "skill"}, {"q": "Saat merekam teman berbicara, gambar terlihat sering bergoyang. Cara mengatasinya adalah ....", "options": ["Menggerakkan ponsel lebih cepat", "Memegang ponsel dengan lebih stabil", "Merekam sambil berlari", "Menutup sebagian kamera", "Mengubah suara teman"], "answer": 1, "type": "skill"}, {"q": "Dalam video wawancara, suara narasumber tidak terdengar jelas. Hal yang sebaiknya dilakukan adalah ....", "options": ["Membiarkannya karena gambar sudah bagus", "Mendekatkan alat perekam atau mencari tempat yang lebih tenang", "Menambahkan musik lebih keras", "Memotong seluruh bagian wawancara", "Mengganti narasumber tanpa alasan"], "answer": 1, "type": "skill"}, {"q": "Agar penonton memahami kegiatan yang direkam, video sebaiknya ....", "options": ["Berisi gambar yang acak", "Memiliki urutan awal, kegiatan utama, dan penutup", "Hanya menampilkan satu benda", "Berisi bagian penutup saja", "Tidak memiliki hubungan antarbagian"], "answer": 1, "type": "skill"}, {"q": "Kamu merekam video untuk ditampilkan di layar lebar sekolah. Posisi ponsel yang paling sesuai adalah ....", "options": ["Mendatar", "Terbalik", "Miring", "Menghadap ke bawah", "Bebas tanpa memperhatikan hasil"], "answer": 0, "type": "skill"}, {"q": "Saat merekam kegiatan, ada orang berjalan menutupi kamera. Sebaiknya kamu ....", "options": ["Tetap menggunakan hasil tersebut tanpa diperiksa", "Mengambil ulang dari posisi yang lebih baik", "Berhenti membuat video", "Memarahi semua orang", "Menghapus seluruh rekaman"], "answer": 1, "type": "skill"}, {"q": "Agar video tidak membosankan, kamu dapat ....", "options": ["Menampilkan satu gambar yang sama terus-menerus", "Mengambil beberapa bagian kegiatan dari sudut yang berbeda", "Menggoyangkan kamera sepanjang rekaman", "Menambahkan suara yang sangat keras", "Menghapus semua bagian penting"], "answer": 1, "type": "skill"}, {"q": "Saat merekam teman, hal yang sebaiknya dihindari adalah ....", "options": ["Memastikan wajahnya terlihat jelas", "Memeriksa suara sebelum merekam", "Merekam tanpa izin dalam keadaan yang dapat mempermalukan", "Memilih tempat yang cukup terang", "Menjaga kamera tetap stabil"], "answer": 2, "type": "skill"}, {"q": "Jika mendapat tugas membuat video profil sekolah, saya ....", "options": ["Tidak ingin terlibat", "Hanya ingin melihat orang lain bekerja", "Bersedia membantu bagian sederhana", "Tertarik ikut membuat konsep atau merekam", "Sangat ingin terlibat dari awal sampai selesai"], "type": "interest"}, {"q": "Jika hasil video pertama belum bagus, saya ....", "options": ["Langsung berhenti", "Menyalahkan alat yang digunakan", "Mencoba kembali jika diminta", "Melihat kekurangannya dan merekam ulang", "Merekam ulang, mencari contoh, dan terus memperbaiki hasilnya"], "type": "interest"}]}, {"id": "reporter", "title": "Reporter", "description": "Mengukur keberanian bertanya, mendengarkan, memeriksa informasi, dan menyampaikan cerita.", "questions": [{"q": "Kamu diminta mewawancarai ketua panitia suatu kegiatan. Pertanyaan yang paling baik adalah ....", "options": ["Acaranya bagus, kan?", "Apakah Anda senang?", "Bagaimana persiapan kegiatan ini dilakukan?", "Acaranya tidak sulit, ya?", "Anda setuju dengan saya, bukan?"], "answer": 2, "type": "skill"}, {"q": "Saat narasumber sedang menjawab pertanyaan, reporter sebaiknya ....", "options": ["Memotong pembicaraan terus-menerus", "Mendengarkan dengan baik", "Bermain ponsel", "Berbicara dengan teman", "Meninggalkan narasumber"], "answer": 1, "type": "skill"}, {"q": "Kamu mendapat informasi dari seorang teman, tetapi belum yakin kebenarannya. Sebaiknya kamu ....", "options": ["Langsung menyebarkannya", "Menambahkan cerita agar lebih menarik", "Memeriksa informasi kepada pihak yang mengetahui kejadian", "Mengunggahnya dengan nama samaran", "Menganggap informasi tersebut pasti benar"], "answer": 2, "type": "skill"}, {"q": "Sebelum melakukan wawancara, hal yang sebaiknya disiapkan adalah ....", "options": ["Daftar pertanyaan", "Daftar lagu", "Permainan untuk narasumber", "Efek suara", "Hiasan untuk ruangan"], "answer": 0, "type": "skill"}, {"q": "Jika narasumber memberikan jawaban yang belum jelas, reporter sebaiknya ....", "options": ["Membuat jawaban sendiri", "Mengakhiri wawancara", "Meminta narasumber menjelaskan lebih lanjut", "Mengubah isi jawabannya", "Menertawakan jawaban tersebut"], "answer": 2, "type": "skill"}, {"q": "Saat menyampaikan berita di depan kamera, reporter sebaiknya berbicara ....", "options": ["Sangat cepat agar segera selesai", "Pelan dan tidak terdengar", "Jelas, teratur, dan mudah dipahami", "Sambil membelakangi kamera", "Tanpa memahami isi berita"], "answer": 2, "type": "skill"}, {"q": "Reporter sekolah mendapatkan informasi pribadi dari seorang siswa. Reporter sebaiknya ....", "options": ["Langsung menyebarkannya", "Menjaga privasi dan mempertimbangkan izin", "Mengunggahnya agar menjadi ramai", "Menambahkan informasi yang tidak ada", "Mengirimkannya kepada semua teman"], "answer": 1, "type": "skill"}, {"q": "Setelah selesai melakukan wawancara, reporter perlu ....", "options": ["Memeriksa kembali catatan atau rekamannya", "Menghapus semua jawaban", "Mengubah jawaban narasumber", "Menambahkan pendapat pribadi sebagai fakta", "Menyimpan informasi tanpa digunakan"], "answer": 0, "type": "skill"}, {"q": "Jika diberi kesempatan mewawancarai guru atau tamu sekolah, saya ....", "options": ["Tidak mau mencobanya", "Mau jika semua pertanyaan dibacakan orang lain", "Mau mencoba dengan bantuan teman", "Tertarik menyiapkan dan melakukan wawancara", "Sangat tertarik melakukan wawancara dan menyampaikan hasilnya"], "type": "interest"}, {"q": "Untuk menjadi reporter sekolah, saya bersedia ....", "options": ["Tidak mengikuti latihan", "Berlatih hanya saat ada nilai", "Sesekali mencoba berbicara di depan orang lain", "Berlatih bertanya dan berbicara dengan jelas", "Aktif mencari informasi, berlatih, dan menerima evaluasi"], "type": "interest"}]}, {"id": "editing", "title": "Editing Video / Grafis", "description": "Mengukur ketelitian merapikan video, suara, poster, tulisan, warna, dan susunan informasi.", "questions": [{"q": "Kamu memiliki rekaman berdurasi lima menit, tetapi ada bagian kosong yang cukup panjang. Sebaiknya kamu ....", "options": ["Membiarkan bagian kosong tersebut", "Memotong bagian yang tidak diperlukan", "Mengulang bagian kosong berkali-kali", "Menambahkan suara yang sangat keras", "Menghapus seluruh video"], "answer": 1, "type": "skill"}, {"q": "Saat membuat poster, tulisan terlihat sulit dibaca karena warnanya hampir sama dengan latar belakang. Sebaiknya kamu ....", "options": ["Membuat warna tulisan lebih berbeda dari latarnya", "Mengecilkan tulisan", "Menambahkan lebih banyak gambar", "Menghapus judul", "Menggunakan semua warna sekaligus"], "answer": 0, "type": "skill"}, {"q": "Dalam sebuah video, suara musik lebih keras daripada suara orang yang berbicara. Sebaiknya kamu ....", "options": ["Menaikkan suara musik lagi", "Mengecilkan suara musik", "Menghapus suara orang", "Menambah lebih banyak lagu", "Membiarkannya tanpa diperiksa"], "answer": 1, "type": "skill"}, {"q": "Agar poster kegiatan mudah dipahami, informasi yang paling penting sebaiknya ....", "options": ["Ditulis sangat kecil", "Diletakkan pada bagian yang mudah terlihat", "Disembunyikan di belakang gambar", "Menggunakan warna yang sama dengan latar", "Dihapus agar poster lebih kosong"], "answer": 1, "type": "skill"}, {"q": "Penggunaan terlalu banyak hiasan dan efek dalam video dapat membuat ....", "options": ["Isi video semakin mudah dipahami", "Penonton lebih fokus pada pesan utama", "Video terlihat ramai dan pesan utamanya kurang jelas", "Suara menjadi lebih jernih", "Durasi video menjadi lebih pendek"], "answer": 2, "type": "skill"}, {"q": "Sebelum menyimpan hasil akhir video atau desain, sebaiknya kamu ....", "options": ["Memeriksa kembali tulisan, gambar, dan suara", "Langsung menghapus file awal", "Mengirimkannya tanpa melihat hasil", "Mengganti semua isi", "Menutup aplikasi secara tiba-tiba"], "answer": 0, "type": "skill"}, {"q": "Kamu ingin menggunakan lagu dari internet untuk video sekolah. Tindakan yang paling tepat adalah ....", "options": ["Menggunakan lagu apa saja tanpa diperiksa", "Menggunakan lagu yang diperbolehkan atau mencantumkan sumber sesuai ketentuan", "Mengaku lagu tersebut sebagai milik sendiri", "Menghapus nama pembuat lagu", "Mengunggah ulang lagu secara penuh"], "answer": 1, "type": "skill"}, {"q": "Agar hasil editing tidak hilang, kamu sebaiknya ....", "options": ["Menyimpan pekerjaan secara berkala", "Menunggu sampai perangkat mati", "Tidak memberi nama file", "Menghapus file setelah selesai", "Menyimpan hanya di satu tempat tanpa cadangan"], "answer": 0, "type": "skill"}, {"q": "Ketika melihat video atau poster yang kurang rapi, saya ....", "options": ["Tidak tertarik memperbaikinya", "Menunggu orang lain memperbaiki", "Mau mencoba jika diberi petunjuk", "Tertarik memperbaiki susunan, tulisan, atau gambarnya", "Sangat tertarik membuat hasilnya lebih menarik dan mudah dipahami"], "type": "interest"}, {"q": "Untuk mempelajari aplikasi editing baru, saya ....", "options": ["Tidak mau mencobanya", "Langsung berhenti ketika kesulitan", "Mau mencoba jika diwajibkan", "Bersedia mengikuti panduan dan berlatih", "Senang belajar sendiri, mencoba berbagai cara, dan membuat karya"], "type": "interest"}]}, {"id": "bahasa", "title": "Editor Bahasa", "description": "Mengukur ketelitian memperbaiki kalimat, caption, judul, informasi, dan kesalahan penulisan.", "questions": [{"q": "Kalimat yang paling jelas dan mudah dipahami adalah ....", "options": ["Para siswa-siswa mengikuti kegiatan bersama-sama.", "Siswa mengikuti kegiatan jurnalistik di aula sekolah.", "Para siswa adalah mengikuti kegiatan yang diadakan.", "Kegiatan tersebut adalah kegiatan yang diikuti siswa-siswa.", "Siswa mengikuti kegiatan yang mana kegiatan itu dilaksanakan."], "answer": 1, "type": "skill"}, {"q": "Penulisan yang benar adalah ....", "options": ["di sekolah", "disekolah", "diSekolah", "di-sekolah", "Di sekolahh"], "answer": 0, "type": "skill"}, {"q": "Kalimat yang menggunakan tanda baca dengan tepat adalah ....", "options": ["Kegiatan dimulai pukul 08.00 dan berakhir pukul 11.00.", "Kegiatan dimulai, pukul 08.00 dan berakhir pukul 11.00", "Kegiatan dimulai pukul 08.00, dan, berakhir pukul 11.00.", "Kegiatan dimulai pukul 08.00 dan berakhir pukul 11.00,", "Kegiatan, dimulai pukul 08.00 dan berakhir, pukul 11.00."], "answer": 0, "type": "skill"}, {"q": "Judul berita yang paling jelas adalah ....", "options": ["Acara Seru Banget!", "Ada Kegiatan Kemarin", "Siswa Kelas X Mengikuti Pelatihan Jurnalistik", "Wah, Sekolah Kita Keren", "Jangan Lewatkan Berita Ini"], "answer": 2, "type": "skill"}, {"q": "Kalimat “Acara itu sangat ramai sekali” dapat diperbaiki menjadi ....", "options": ["Acara itu ramai.", "Acara itu sangat ramai sekali banget.", "Acara ramai itu sekali.", "Sangat acara itu ramai.", "Acara tersebut sangat ramai sekali sekali."], "answer": 0, "type": "skill"}, {"q": "Sebelum mengunggah berita sekolah, editor bahasa sebaiknya ....", "options": ["Memeriksa isi, nama, waktu, dan penulisannya", "Langsung mengunggah tanpa membaca", "Mengganti semua fakta", "Menambahkan cerita yang tidak terjadi", "Menghapus nama kegiatan"], "answer": 0, "type": "skill"}, {"q": "Caption foto kegiatan yang baik seharusnya ....", "options": ["Menjelaskan kegiatan dalam foto secara singkat dan jelas", "Hanya berisi emoji", "Tidak berhubungan dengan foto", "Berisi informasi yang belum pasti", "Menggunakan kata-kata yang sulit dipahami"], "answer": 0, "type": "skill"}, {"q": "Kamu menemukan salah tulis nama seseorang dalam berita. Sebaiknya kamu ....", "options": ["Membiarkannya", "Memperbaikinya setelah memastikan nama yang benar", "Menghapus seluruh berita", "Mengganti dengan nama orang lain", "Menambahkan nama panggilan tanpa izin"], "answer": 1, "type": "skill"}, {"q": "Ketika membaca caption yang kurang jelas, saya ....", "options": ["Tidak memperhatikannya", "Mengetahui kesalahannya, tetapi tidak tertarik memperbaiki", "Mau memperbaiki jika diminta", "Tertarik membuatnya lebih jelas dan menarik", "Sangat tertarik memperbaiki kata, susunan kalimat, dan isi caption"], "type": "interest"}, {"q": "Untuk meningkatkan kemampuan menulis, saya ....", "options": ["Tidak tertarik membaca atau menulis", "Menulis hanya jika ada tugas", "Sesekali membaca contoh tulisan", "Bersedia berlatih menulis dan menerima koreksi", "Sering membaca, menulis, dan memperbaiki tulisan sendiri"], "type": "interest"}]}];
 const letters = ["A","B","C","D","E"];
 let answers = {};
@@ -311,7 +304,7 @@ function calculateResults() {
 }
 async function saveResultsToGoogleSheet(results) {
   const resultById = Object.fromEntries(
-    results.map((result) => [result.id, result])
+    results.map(result => [result.id, result])
   );
 
   const namaSiswa =
@@ -350,53 +343,148 @@ async function saveResultsToGoogleSheet(results) {
   await fetch(GOOGLE_SHEET_URL, {
     method: "POST",
     mode: "no-cors",
-    body: payload,
-    keepalive: true
+    body: payload
   });
 }
+  
 async function showResults() {
-  if(Object.keys(answers).length !== totalQuestions()) return;
-  const results = calculateResults();
-  resultBtn.disabled = true;
-resultBtn.textContent = "Menyimpan hasil...";
+  if (Object.keys(answers).length !== totalQuestions()) return;
 
-try {
-  await saveResultsToGoogleSheet(results);
-} catch (error) {
-  console.error("Gagal mengirim hasil:", error);
-}
-  const name = document.getElementById("studentName").value.trim();
+  const results = calculateResults();
+
+  resultBtn.disabled = true;
+  resultBtn.textContent = "Menyimpan hasil...";
+
+  let dataTerkirim = false;
+
+  try {
+    await saveResultsToGoogleSheet(results);
+    dataTerkirim = true;
+  } catch (error) {
+    console.error("Gagal mengirim hasil:", error);
+  }
+
+  const name = document
+    .getElementById("studentName")
+    .value
+    .trim();
+
   document.getElementById("resultIntro").textContent =
-    (name ? name + ", " : "") + "berikut hasil kemampuan dasar dan minatmu pada setiap bidang.";
-  document.getElementById("topDivision").textContent = results[0].title;
-  document.getElementById("topScore").textContent = "Skor total: " + results[0].total + "/18";
-  document.getElementById("secondDivision").textContent = results[1].title;
-  document.getElementById("secondScore").textContent = "Skor total: " + results[1].total + "/18";
+    (name ? name + ", " : "") +
+    "berikut hasil kemampuan dasar dan minatmu pada setiap bidang.";
+
+  let syncStatus = document.getElementById("syncStatus");
+
+  if (!syncStatus) {
+    syncStatus = document.createElement("p");
+    syncStatus.id = "syncStatus";
+
+    document
+      .getElementById("resultIntro")
+      .insertAdjacentElement("afterend", syncStatus);
+  }
+
+  if (dataTerkirim) {
+    syncStatus.textContent =
+      "Hasil telah dikirim ke Google Sheets.";
+
+    syncStatus.style.color = "#34d399";
+  } else {
+    syncStatus.textContent =
+      "Hasil berhasil dihitung, tetapi belum dapat dikirim ke Google Sheets.";
+
+    syncStatus.style.color = "#fb7185";
+  }
+
+  syncStatus.style.fontWeight = "700";
+  syncStatus.style.marginTop = "8px";
+
+  document.getElementById("topDivision").textContent =
+    results[0].title;
+
+  document.getElementById("topScore").textContent =
+    "Skor total: " + results[0].total + "/18";
+
+  document.getElementById("secondDivision").textContent =
+    results[1].title;
+
+  document.getElementById("secondScore").textContent =
+    "Skor total: " + results[1].total + "/18";
 
   const list = document.getElementById("resultList");
+
   list.innerHTML = "";
-  results.forEach((r,i)=>{
+
+  results.forEach((r, i) => {
     const card = document.createElement("div");
+
     card.className = "result-card";
+
     card.innerHTML = `
       <div class="result-row">
         <div class="result-title">
-          <div class="rank">${i+1}</div>
-          <div><strong>${r.title}</strong><div style="color:var(--muted);font-size:13px;margin-top:4px">${r.description}</div></div>
+          <div class="rank">${i + 1}</div>
+
+          <div>
+            <strong>${r.title}</strong>
+
+            <div
+              style="
+                color: var(--muted);
+                font-size: 13px;
+                margin-top: 4px;
+              "
+            >
+              ${r.description}
+            </div>
+          </div>
         </div>
+
         <div class="score">${r.total}/18</div>
       </div>
+
       <div class="subscores">
-        <div class="sub"><strong>Kemampuan dasar: ${r.skill}/8</strong><small>${skillLabel(r.skill)}</small></div>
-        <div class="sub"><strong>Minat belajar: ${r.interest}/10</strong><small>${interestLabel(r.interest)}</small></div>
+        <div class="sub">
+          <strong>
+            Kemampuan dasar: ${r.skill}/8
+          </strong>
+
+          <small>
+            ${skillLabel(r.skill)}
+          </small>
+        </div>
+
+        <div class="sub">
+          <strong>
+            Minat belajar: ${r.interest}/10
+          </strong>
+
+          <small>
+            ${interestLabel(r.interest)}
+          </small>
+        </div>
       </div>
     `;
+
     list.appendChild(card);
   });
 
-  document.getElementById("quizView").classList.add("hidden");
-  document.getElementById("resultView").classList.remove("hidden");
-  window.scrollTo({top:0,behavior:"smooth"});
+  resultBtn.textContent = "Lihat Hasil";
+
+  document
+    .getElementById("quizView")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("resultView")
+    .classList
+    .remove("hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 document.getElementById("resetBtn").onclick = ()=>{
